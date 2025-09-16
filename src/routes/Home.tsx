@@ -1,9 +1,17 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { projectModules } from '../site/lib/projects';
+import { projectModulesBySlug } from '../site/lib/projects';
 
 export default function Home() {
   const prefersReduced = useReducedMotion();
+  
+  // Featured projects: fuelfed, resume-maker, ute-pass-vacation-rentals
+  const featuredProjects = [
+    projectModulesBySlug['fuelfed-motor-market'],
+    projectModulesBySlug['resume-maker'],
+    projectModulesBySlug['ute-pass-vacation-rentals']
+  ].filter(Boolean);
+
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 py-12">
       <motion.section
@@ -24,15 +32,29 @@ export default function Home() {
             <Link to="/resume" className="rounded-2xl border border-slate-300 dark:border-slate-700 px-5 py-3">Download Resume</Link>
           </div>
         </div>
-        <div className="aspect-video rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900" aria-hidden />
+        <div className="flex justify-center">
+          <img 
+            src="/home.jpeg" 
+            alt="Atreyu Sutton" 
+            className="rounded-2xl shadow-soft max-w-full h-auto"
+          />
+        </div>
       </motion.section>
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6 py-12">
         <h2 className="text-xl font-semibold">Featured projects</h2>
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {Object.values(projectModules).slice(0, 3).map((m: any) => (
+          {featuredProjects.map((m: any) => (
             <Link key={m.frontmatter.slug} to={`/projects/${m.frontmatter.slug}`} className="block rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-soft transition">
-              <div className="aspect-video bg-slate-100 dark:bg-slate-800" />
+              {m.frontmatter.cover ? (
+                <img 
+                  src={m.frontmatter.cover} 
+                  alt={m.frontmatter.title}
+                  className="aspect-video object-cover w-full"
+                />
+              ) : (
+                <div className="aspect-video bg-slate-100 dark:bg-slate-800" />
+              )}
               <div className="p-4">
                 <div className="text-xs uppercase tracking-wide text-slate-500">{m.frontmatter.category}</div>
                 <h3 className="mt-1 font-semibold">{m.frontmatter.title}</h3>

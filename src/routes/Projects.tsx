@@ -19,7 +19,15 @@ export default function Projects() {
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((m: any) => (
           <Link key={m.frontmatter.slug} to={`/projects/${m.frontmatter.slug}`} className="block rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-soft transition">
-            <div className="aspect-video bg-slate-100 dark:bg-slate-800" />
+            {m.frontmatter.cover ? (
+              <img 
+                src={m.frontmatter.cover} 
+                alt={m.frontmatter.title}
+                className="aspect-video object-cover w-full"
+              />
+            ) : (
+              <div className="aspect-video bg-slate-100 dark:bg-slate-800" />
+            )}
             <div className="p-4">
               <div className="text-xs uppercase tracking-wide text-slate-500">{m.frontmatter.category}</div>
               <h3 className="mt-1 font-semibold">{m.frontmatter.title}</h3>

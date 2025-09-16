@@ -16,6 +16,21 @@
         } catch (_) {}
       })();
     </script>
+    <script>
+      // GitHub Pages SPA redirect handling
+      (function(l) {
+        if (l.search) {
+          var q = {};
+          l.search.slice(1).split('&').forEach(function(v) {
+            var a = v.split('=');
+            q[a[0]] = a.splice(1).join('=');
+          });
+          if (q.p !== undefined) {
+            window.history.replaceState(null, null, q.p + (q.q ? ('?' + q.q) : '') + (l.hash || ''));
+          }
+        }
+      })(window.location);
+    </script>
   </head>
   <body class="bg-white text-slate-900 dark:bg-[#0b1220] dark:text-slate-100">
     <div id="root"></div>
